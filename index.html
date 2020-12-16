@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        
+<link rel="stylesheet" type="text/css" href="style.css">
+        <style>
+        #map {
+            width: 1487px;
+            height: 813px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body style="font-family:Segoe UI, Arial; font-size: 11px;">
+<header>
+		
+		<div class="logo">
+			<img src="images/mcm-library_left-col.png" alt="McMaster University Library logo" />
+		</div>		
+		
+		<div id="buttonzone" style="right:1vw">
+		
+		<a href="https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A88992" style="text-decoration:none; margin-left: 0.8vw" target="_blank"><button class="button">Digital Archive</button></a>
+		<a href="https://library.mcmaster.ca/spaces/maps-data-gis" style="text-decoration:none" target="_blank"><button class="button">Contact</button></a>
+		</div>
+	
+		<hgroup>
+		<h1 style="font-size:1.4vw; margin-left:6vw;"><b>McMaster University Library | </b>Crete 1:50,000 - WWII Topographic Series</h1>
+		</hgroup>
+
+	</header>
+        <div id="map" style="width: 100vw; height: 94vh; font-size: 12px;"></div>
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>        
+        <script src="data/Crete_ActualFinal_1.js"></script>
+        <script>
+var bounds_group = new L.featureGroup([]);
+var osm = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+	maxZoom: 28});
+var grayscale = L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+	maxZoom: 28});
+
+var baseMaps = {"OpenStreetMap": osm,"Grayscale": grayscale}; 
+        var map = L.map('map', {center:[35.2512,24.9692], layers:[osm], zoom: 9, maxZoom:12, minZoom:5});
+map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        function pop_Crete_ActualFinal_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['crete_tn_f'] !== null ? Autolinker.link(String(feature.properties['crete_tn_f'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Sheet name </strong>' + (feature.properties['crete_name'] !== null ? Autolinker.link(String(feature.properties['crete_name'])) : '') + '</td>\
+                    </tr>\
+<tr>\
+                        <td colspan="2"><strong>Sheet number  </strong>' + (feature.properties['crete_shee'] !== null ? Autolinker.link(String(feature.properties['crete_shee'])) : '') + '</td>\
+                    </tr>\
+<tr>\
+                        <td colspan="2"><strong>Date </strong>' + (feature.properties['crete_year'] !== null ? Autolinker.link(String(feature.properties['crete_year'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Citation</th>\
+                        <td>' + (feature.properties['cite'] !== null ? Autolinker.link(String(feature.properties['cite'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['crete_da_f'] !== null ? Autolinker.link(String(feature.properties['crete_da_f'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Crete_ActualFinal_1_0() {
+            return {
+                pane: 'pane_Crete_ActualFinal_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+			weight: 0.7, 
+                fill: true,
+                fillOpacity: 0.7,
+                fillColor: 'rgba(253,174,47,0.6)',
+            }
+        }
+        function style_Crete_ActualFinal_1_1() {
+            return {
+                pane: 'pane_Crete_ActualFinal_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Crete_ActualFinal_1');
+        map.getPane('pane_Crete_ActualFinal_1').style.zIndex = 401;
+        map.getPane('pane_Crete_ActualFinal_1').style['mix-blend-mode'] = 'normal';
+        var layer_Crete_ActualFinal_1 = new L.geoJson.multiStyle(json_Crete_ActualFinal_1, {
+            attribution: '',
+            pane: 'pane_Crete_ActualFinal_1',
+            onEachFeature: pop_Crete_ActualFinal_1,
+            styles: [style_Crete_ActualFinal_1_0,style_Crete_ActualFinal_1_1,]
+        });
+        bounds_group.addLayer(layer_Crete_ActualFinal_1);
+        map.addLayer(layer_Crete_ActualFinal_1);
+        
+        L.control.layers(baseMaps,{'<strong>Crete Map Boundaries</strong>': layer_Crete_ActualFinal_1,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
