@@ -54,11 +54,8 @@ var bounds_group = new L.featureGroup([]);
 var osm = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 	attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
 	maxZoom: 28});
-var grayscale = L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png', {
-	attribution: '&copy;Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.',
-	maxZoom: 28});
 
-var baseMaps = {"OpenStreetMap": osm,"Grayscale": grayscale}; 
+var baseMaps = {"OpenStreetMap": osm}; 
         var map = L.map('map', {center:[35.2512,24.9692], layers:[osm], zoom: 9, maxZoom:12, minZoom:5});
 map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
         function pop_Crete_ActualFinal_1(feature, layer) {
