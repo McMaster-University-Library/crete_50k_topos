@@ -19,6 +19,79 @@
         <title>Crete 50k Topographic Maps</title>
     </head>
     <body style="font-family:Segoe UI, Arial; font-size: 11px;">
+
+<!-- TEMPORARY SPLASH SCREEN CONTENT -->
+
+<div id="splash-screen" role="dialog" aria-labelledby="splash-title">
+  <h1>Welcome to the Crete 1:50,000 Topographic Series Index!</h1><br></br>
+  <p id="welcome-text">Digitized maps are temporarily unavailable for download.</p><br></br>
+  <p id="welcome-text">If you need access to content from the Digital Archive while the system is offline, please complete the <a href="https://forms.office.com/r/MX6hL4ZKtZ">request form</a>, and a staff member will follow up via email.</p><br></br>
+  <p id="welcome-text">Thank you for your patience!</p><br></br>
+  <button id="close-btn" onclick="closeSplash()">   Enter Map   </button>
+</div>
+
+
+<style>
+  #splash-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  h1 {
+    font-size: 2.5rem; /* Adjust as needed */
+    margin-bottom: 10px;
+  }
+
+  #welcome-text {
+    font-size: 1.5rem; /* Increases paragraph size */
+    text-align: center;
+	max-width: 80%;
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+ 
+   button:hover {
+   background: #FDBF57;
+  }
+  
+  a:hover {
+  color: #FDBF57;
+}
+</style>
+
+<script>
+  function closeSplash() {
+        document.getElementById("splash-screen").style.display = "none";
+		document.getElementById("main-content").removeAttribute("aria-hidden");
+    }
+
+    // Allow closing with Enter or Space key
+    document.getElementById("close-btn").addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault(); // Prevent unwanted scrolling
+            closeSplash();
+        }
+    });
+</script>
+
+<!-- END OF SPLASH SCREEN -->
+
+<!-- main-content added for splash screen keyboard functionality -->
+
+<div id="main-content" aria-hidden="true">
+
 <header>
 		
 		<div class="logo">
@@ -27,8 +100,10 @@
 		
 		<div id="buttonzone" style="right:1vw">
 		
-		<a href="https://digitalarchive.mcmaster.ca/islandora/object/macrepo%3A88992" style="text-decoration:none; margin-left: 0.8vw" target="_blank"><button class="button">Digital Archive</button></a>
-		<a href="https://library.mcmaster.ca/spaces/maps-data-gis" style="text-decoration:none" target="_blank"><button class="button">Contact</button></a>
+		<!-- TEMPORARY UPDATE -->		
+		<a href="https://forms.office.com/r/MX6hL4ZKtZ" style="text-decoration:none; margin-left: 0.8vw" target="_blank"><button class="button">Digital Materials Request</button></a>
+		
+		<a href="https://library.mcmaster.ca/spaces/maps" style="text-decoration:none" target="_blank"><button class="button">Contact</button></a>
 		</div>
 	
 		<hgroup>
@@ -37,7 +112,10 @@
 
 	</header>
         <div id="map" style="width: 100vw; height: 94vh; font-size: 12px;"></div>
-        </div>
+        
+
+
+		
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/multi-style-layer.js"></script>
@@ -124,5 +202,33 @@ map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qg
         L.control.layers(baseMaps,{'<strong>Crete Map Boundaries</strong>': layer_Crete_ActualFinal_1,},{collapsed:false}).addTo(map);
         setBounds();
         </script>
+
+	<!-- SPLASH SCREEN CONTENT -->
+	<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const splashScreen = document.getElementById("splash-screen");
+            const focusableElements = splashScreen.querySelectorAll("button, a, input, [tabindex]:not([tabindex='-1'])");
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            splashScreen.addEventListener("keydown", function (event) {
+                if (event.key === "Tab") {
+                    if (event.shiftKey) { // Shift + Tab moves focus backward
+                        if (document.activeElement === firstElement) {
+                            event.preventDefault();
+                            lastElement.focus();
+                        }
+                    } else { // Tab moves focus forward
+                        if (document.activeElement === lastElement) {
+                            event.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
     </body>
+</div>
+
 </html>
